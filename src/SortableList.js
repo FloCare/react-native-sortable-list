@@ -114,7 +114,7 @@ export default class SortableList extends Component {
         animated: false,
         data: nextData,
         containerLayout: null,
-        rowsLayouts: null,
+        // rowsLayouts: null,
         order: nextOrder
       });
 
@@ -186,7 +186,7 @@ export default class SortableList extends Component {
   render() {
     let {contentContainerStyle, innerContainerStyle, horizontal, style, showsVerticalScrollIndicator, showsHorizontalScrollIndicator} = this.props;
     const {animated, contentHeight, contentWidth, scrollEnabled} = this.state;
-    const containerStyle = StyleSheet.flatten([style, {opacity: Number(animated)}])
+    const containerStyle = StyleSheet.flatten([style])//, {opacity: Number(animated)}])
     innerContainerStyle = [
       styles.rowsContainer,
       horizontal ? {width: contentWidth} : {height: contentHeight},
@@ -261,7 +261,7 @@ export default class SortableList extends Component {
           disabled={!sortingEnabled}
           style={style}
           location={location}
-          onLayout={!rowsLayouts ? this._onLayoutRow.bind(this, key) : null}
+          onLayout={this._onLayoutRow.bind(this, key)}
           onActivate={this._onActivateRow.bind(this, key, index)}
           onPress={this._onPressRow.bind(this, key)}
           onRelease={this._onReleaseRow.bind(this, key)}
