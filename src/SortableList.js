@@ -272,6 +272,7 @@ export default class SortableList extends Component {
             data: data[key],
             disabled: !sortingEnabled,
             active,
+            sortingActive: activeRowKey !== null,
             index,
           })}
         </Row>
