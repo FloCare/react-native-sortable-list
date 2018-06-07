@@ -225,7 +225,7 @@ export default class SortableList extends Component {
   _renderRows() {
     const {horizontal, rowActivationTime, sortingEnabled, renderRow} = this.props;
     const {animated, order, data, activeRowKey, releasedRowKey, rowsLayouts} = this.state;
-
+    const RenderRowComponent = renderRow;
 
     let nextX = 0;
     let nextY = 0;
@@ -267,14 +267,14 @@ export default class SortableList extends Component {
           onRelease={this._onReleaseRow.bind(this, key)}
           onMove={this._onMoveRow}
           manuallyActivateRows={this.props.manuallyActivateRows}>
-          {renderRow({
-            key,
-            data: data[key],
-            disabled: !sortingEnabled,
-            active,
-            sortingActive: activeRowKey !== null,
-            index,
-          })}
+          <RenderRowComponent
+            key={key}
+            data={data[key]}
+            disabled={!sortingEnabled}
+            active={active}
+            sortingActive={activeRowKey !== null}
+            index={index}
+          />
         </Row>
       );
     });
