@@ -266,7 +266,9 @@ export default class SortableList extends Component {
           onPress={this._onPressRow.bind(this, key)}
           onRelease={this._onReleaseRow.bind(this, key)}
           onMove={this._onMoveRow}
-          manuallyActivateRows={this.props.manuallyActivateRows}>
+          manuallyActivateRows={this.props.manuallyActivateRows}
+          onItemLayoutUpdate={this._onItemLayoutUpdate}
+        >
           <RenderRowComponent
             key={key}
             data={data[key]}
@@ -306,6 +308,13 @@ export default class SortableList extends Component {
         {this.props.renderFooter()}
       </View>
     );
+  }
+
+    _onItemLayoutUpdate = (key) => {
+    this._rowsLayouts[key] = new Promise((resolve) => {
+      this._resolveRowLayout[key] = resolve;
+    });
+    this._onUpdateLayouts();
   }
 
   _onUpdateLayouts() {

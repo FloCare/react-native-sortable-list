@@ -178,8 +178,11 @@ export default class Row extends Component {
         {this.props.manuallyActivateRows && children
           ? cloneElement(children, {
             toggleRowActive: this._toggleActive,
+            onItemLayoutUpdate: this.props._onItemLayoutUpdate
           })
-          : children
+          : cloneElement(children, {
+            onItemLayoutUpdate: this.props._onItemLayoutUpdate
+          })
         }
       </Animated.View>
     );
