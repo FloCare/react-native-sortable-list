@@ -66,6 +66,7 @@ export default class Row extends Component {
       e.persist();
 
       this._target = e.nativeEvent.target;
+      this._is_responder = true;
       this._prevGestureState = {
         ...gestureState,
         moveX: gestureState.x0,
@@ -104,6 +105,7 @@ export default class Row extends Component {
     },
 
     onPanResponderRelease: (e, gestureState) => {
+      this._is_responder = false;
       if (this._active) {
         this._toggleActive(e, gestureState);
 
@@ -178,10 +180,11 @@ export default class Row extends Component {
         {this.props.manuallyActivateRows && children
           ? cloneElement(children, {
             toggleRowActive: this._toggleActive,
-            onItemLayoutUpdate: this.props.onItemLayoutUpdate
+            onItemLayoutUpdate: this.props._onItemLayoutUpdate,
+            handlePressOutFromTouchable: this._handlePressOutFromTouchable
           })
           : cloneElement(children, {
-            onItemLayoutUpdate: this.props.onItemLayoutUpdate
+            onItemLayoutUpdate: this.props._onItemLayoutUpdate
           })
         }
       </Animated.View>
@@ -207,6 +210,13 @@ export default class Row extends Component {
       this._animatedLocation.setValue(nextLocation);
     }
   }
+
+    _handlePressOutFromTouchable = () => {
+        //To handle row activating and getting released without moving the row
+        if (!this._is_responder && !!this._active) {
+          this._toggleActive();
+        }
+    }
 
   _toggleActive = (e, gestureState) => {
     const callback = this._active ? this.props.onRelease : this.props.onActivate;
