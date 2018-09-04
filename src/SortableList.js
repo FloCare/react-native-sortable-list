@@ -29,7 +29,7 @@ export default class SortableList extends Component {
     autoscrollAreaSize: PropTypes.number,
     rowActivationTime: PropTypes.number,
     manuallyActivateRows: PropTypes.bool,
-
+    keyboardShouldPersistTaps: PropTypes.bool,
     renderRow: PropTypes.func.isRequired,
     renderHeader: PropTypes.func,
     renderFooter: PropTypes.func,
@@ -211,7 +211,9 @@ export default class SortableList extends Component {
           scrollEnabled={scrollEnabled}
           showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
           showsVerticalScrollIndicator={showsVerticalScrollIndicator}
-          onScroll={this._onScroll}>
+          onScroll={this._onScroll}
+          keyboardShouldPersistTaps={this.props.keyboardShouldPersistTaps}
+        >
           {this._renderHeader()}
           <View style={innerContainerStyle}>
             {this._renderRows()}
